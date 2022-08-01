@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserService } from './services/user.service';
 
@@ -8,10 +8,33 @@ import { UserService } from './services/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'API';
   
- 
+  constructor(private userService: UserService) {}
+  ngOnInit(): void {
+   this.onGetUsers();
+   this.onGetUser();
+  }
+
+  onGetUsers(): void{
+    this.userService.getUsers().subscribe(
+      (response) => console.log(response),
+      (error: any) => console.log(error),
+      () => console.log('Done getting users'),
+    );
+  }
+
+  
+  onGetUser(): void{
+    this.userService.getUser().subscribe(
+      (response) => console.log(response),
+      (error: any) => console.log(error),
+      () => console.log('Done getting user'),
+    );
+  }
+
+
  /* constructor() {
     type HttpResponse = { code: number, data: string};
 
